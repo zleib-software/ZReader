@@ -1,0 +1,46 @@
+{
+  appId: "com.zreader.app",
+  productName: "ZReader",
+  directories: {
+    output: "release",
+    buildResources: "build"
+  },
+  files: [
+    "dist/**/*",
+    "dist-electron/**/*",
+    "package.json"
+  ],
+  win: {
+    target: [
+      {
+        target: "nsis",
+        arch: ["x64"]
+      },
+      {
+        target: "zip",
+        arch: ["x64"]
+      },
+      {
+        target: "portable",
+        arch: ["x64"]
+      }
+    ],
+    icon: "build/icon.ico"
+  },
+  nsis: {
+    oneClick: false,
+    allowToChangeInstallationDirectory: true,
+    deleteAppDataOnUninstall: false,
+    differentialPackage: true,
+    createDesktopShortcut: true,
+    createStartMenuShortcut: true,
+    shortcutName: "ZReader",
+    uninstallDisplayName: "ZReader"
+  },
+  protocols: [
+    {
+      name: "ZReader Protocol",
+      schemes: ["zreader"]
+    }
+  ]
+}
