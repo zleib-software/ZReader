@@ -9,7 +9,7 @@ export function initMobileBridge() {
   if (typeof window === 'undefined') return;
 
   // If already in Electron desktop, do not override
-  if (window.electronAPI && typeof (window as any).process !== 'undefined') {
+  if (window.electronAPI) {
     return;
   }
 

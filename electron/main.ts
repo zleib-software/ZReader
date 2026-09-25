@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, protocol, net } from 'electron';
 import path from 'node:path';
+import url from 'node:url';
 import fs from 'node:fs';
 import { AppVault } from './storage/vault';
 import { AppDatabase } from './storage/database';
@@ -10,6 +11,10 @@ import { registerIpcHandlers } from './ipc/handlers';
 import { setupSecurityPolicies } from './security';
 
 app.setName('ZReader');
+
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'app', privileges: { secure: true, standard: true, supportFetchAPI: true } }
+]);
 
 function ensureUserDataMigration() {
   try {
@@ -120,7 +125,7 @@ function createWindow() {
     mainWindow.loadURL('http://localhost:5173');
     // mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+    mainWindow.loadURL('app://-/index.html');
   }
 
   mainWindow.on('closed', () => {
@@ -154,6 +159,15 @@ if (!gotTheLock) {
   });
 
   app.whenReady().then(() => {
+    protocol.handle('app', (request) => {
+      const requestUrl = request.url.replace(/^app:\/\/-/, '');
+      let filePath = path.join(__dirname, '../dist', requestUrl);
+      if (requestUrl === '/' || requestUrl === '' || !fs.existsSync(filePath)) {
+        filePath = path.join(__dirname, '../dist/index.html');
+      }
+      return net.fetch(url.pathToFileURL(filePath).toString());
+    });
+
     createWindow();
 
     app.on('activate', () => {
