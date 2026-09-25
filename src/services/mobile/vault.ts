@@ -6,6 +6,7 @@ export interface AppProfile {
   avatarUrl?: string;
   passwordHash?: string;
   passwordSalt?: string;
+  hasPassword?: boolean;
   createdAt: number;
 }
 
@@ -180,13 +181,20 @@ export class AppVaultMobile {
 
   public async getProfile(): Promise<AppProfile | null> {
     await this.ensureInit();
-    return this.profileCache;
+    if (!this.profileCache) return null;
+    return {
+      ...this.profileCache,
+      hasPassword: !!this.profileCache.passwordHash
+    };
   }
 
   public async saveLocalProfile(password: string, name?: string): Promise<{ success: boolean; profile: AppProfile }> {
     await this.ensureInit();
-    const salt = this.generateSalt();
-    const hash = await this.hashPassword(password, salt);
+    let hash, salt;
+    if (password) {
+      salt = this.generateSalt();
+      hash = await this.hashPassword(password, salt);
+    }
 
     const profile: AppProfile = {
       type: 'local',

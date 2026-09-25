@@ -45,8 +45,8 @@ export const App: React.FC = () => {
           setIsUnlocked(false);
         } else {
           setProfile(userProfile);
-          // SECURITY: Require password verification on each app launch
-          setIsUnlocked(false);
+          // SECURITY: Require password verification on each app launch if hasPassword
+          setIsUnlocked(!userProfile.hasPassword);
           setIsOnboardingOpen(false);
         }
 

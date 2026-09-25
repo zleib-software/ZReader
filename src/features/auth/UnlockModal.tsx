@@ -33,7 +33,7 @@ export const UnlockModal: React.FC<UnlockModalProps> = ({ isOpen, onUnlockSucces
         setErrorMsg('Senha incorreta. Tente novamente.');
       }
     } catch {
-      setErrorMsg('Erro ao validar senha mestra.');
+      setErrorMsg('Erro ao validar PIN.');
     } finally {
       setIsLoading(false);
     }
@@ -47,9 +47,9 @@ export const UnlockModal: React.FC<UnlockModalProps> = ({ isOpen, onUnlockSucces
         </div>
 
         <div className="text-center space-y-1">
-          <h2 className="text-base font-bold text-white">Desbloquear Aplicativo</h2>
+          <h2 className="text-base font-bold text-white">App Bloqueado</h2>
           <p className="text-xs text-slate-400">
-            Digite sua senha mestra local para acessar seu cofre seguro
+            Digite seu PIN local para acessar o aplicativo
           </p>
         </div>
 
@@ -65,7 +65,9 @@ export const UnlockModal: React.FC<UnlockModalProps> = ({ isOpen, onUnlockSucces
             <input
               type={showPassword ? 'text' : 'password'}
               autoFocus
-              placeholder="Senha Mestra Local"
+              maxLength={4}
+              inputMode="numeric"
+              placeholder="PIN (4 números)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-3 pr-9 py-2.5 text-xs bg-background/80 border border-background-border rounded-md text-slate-100 focus:outline-none focus:border-primary"
@@ -96,7 +98,7 @@ export const UnlockModal: React.FC<UnlockModalProps> = ({ isOpen, onUnlockSucces
               onClick={() => setShowConfirmReset(true)}
               className="text-[11px] text-slate-500 hover:text-slate-300 transition-colors"
             >
-              Esqueceu a senha mestra?
+              Esqueceu o PIN?
             </button>
           ) : (
             <div className="space-y-2 p-3 rounded-lg bg-accent-rose/10 border border-accent-rose/20 text-left">

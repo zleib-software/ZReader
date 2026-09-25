@@ -10,6 +10,7 @@ export interface AppProfile {
   avatarUrl?: string;
   passwordHash?: string;
   passwordSalt?: string;
+  hasPassword?: boolean;
   createdAt: number;
 }
 
@@ -178,7 +179,12 @@ export class AppVault {
   }
 
   public saveLocalProfile(password: string, name?: string): AppProfile {
-    const { hash, salt } = this.hashMasterPassword(password);
+    let hash, salt;
+    if (password) {
+      const result = this.hashMasterPassword(password);
+      hash = result.hash;
+      salt = result.salt;
+    }
     const safeName = name?.trim() || 'Leitor';
     const profile: AppProfile = {
       type: 'local',
@@ -201,6 +207,7 @@ export class AppVault {
     return {
       ...safeProfile,
       type: 'local',
+      hasPassword: !!passwordHash,
       name: safeProfile.name || 'Leitor',
       avatarUrl: safeProfile.avatarUrl || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(safeProfile.name || 'Leitor')}`
     };
@@ -216,7 +223,7 @@ export class AppVault {
 
     const vault = this.readRawVault();
     if (!vault.profile) return { success: false };
-    if (!vault.profile.passwordHash || !vault.profile.passwordSalt) return { success: false };
+    if (!vault.profile.passwordHash || !vault.profile.passwordSalt) return { success: true };
 
     const isValid = this.verifyMasterPassword(password, vault.profile.passwordHash, vault.profile.passwordSalt);
 

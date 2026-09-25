@@ -301,12 +301,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
-            {onLockSession && (
+            {onLockSession && profile?.hasPassword && (
               <button
                 type="button"
                 onClick={onLockSession}
                 className="px-2.5 py-1 rounded-md bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-xs text-slate-300 hover:text-white flex items-center gap-1.5 transition-colors"
-                title="Bloquear a tela com a senha mestra imediatamente"
+                title="Bloquear a tela com o PIN local imediatamente"
               >
                 <Lock weight="bold" className="w-3.5 h-3.5 text-primary" />
                 <span>Bloquear</span>

@@ -50,12 +50,12 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   // Step 1: Create App Profile (Local with Master Password)
   const handleSetupProfile = async () => {
     setErrorMsg(null);
-    if (!masterPassword || masterPassword.length < 12) {
-      setErrorMsg('A senha mestra deve conter pelo menos 12 caracteres.');
+    if (masterPassword && !/^\d{4}$/.test(masterPassword)) {
+      setErrorMsg('Se desejar usar um PIN, ele deve conter exatamente 4 números.');
       return;
     }
-    if (masterPassword !== confirmPassword) {
-      setErrorMsg('As senhas digitadas não coincidem.');
+    if (masterPassword && masterPassword !== confirmPassword) {
+      setErrorMsg('Os PINs digitados não coincidem.');
       return;
     }
 
@@ -145,7 +145,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
                   <span>Segurança Local-First & Sessão Automática</span>
                 </div>
                 <p className="text-[11px] text-slate-300 leading-relaxed">
-                  Defina o nome do seu perfil e sua senha mestra. Ao fechar o app, tudo permanecerá salvo de forma segura para você continuar logado automaticamente quando abrir o ZReader.
+                  Defina o nome do seu perfil e, opcionalmente, um PIN de 4 números para bloquear o aplicativo. Ao fechar o app, tudo permanecerá salvo de forma segura.
                 </p>
               </div>
 
@@ -167,12 +167,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
               <div>
                 <label className="block text-xs font-medium text-slate-300 mb-1">
-                  Senha Mestra Local
+                  PIN de Acesso (Opcional)
                 </label>
                 <div className="relative">
                   <input
                     type={showMasterPassword ? 'text' : 'password'}
-                    placeholder="Mínimo 12 caracteres"
+                    maxLength={4}
+                    inputMode="numeric"
+                    placeholder="4 números (opcional)"
                     value={masterPassword}
                     onChange={(e) => setMasterPassword(e.target.value)}
                     className="w-full pl-3 pr-9 py-2 text-xs bg-background/80 border border-background-border rounded-lg text-slate-100 focus:outline-none focus:border-primary"
@@ -190,12 +192,14 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
               <div>
                 <label className="block text-xs font-medium text-slate-300 mb-1">
-                  Confirmar Senha Mestra
+                  Confirmar PIN
                 </label>
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="Repita sua senha"
+                    maxLength={4}
+                    inputMode="numeric"
+                    placeholder="Repita o PIN (se usou)"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="w-full pl-3 pr-9 py-2 text-xs bg-background/80 border border-background-border rounded-lg text-slate-100 focus:outline-none focus:border-primary"
