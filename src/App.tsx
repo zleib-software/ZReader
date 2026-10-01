@@ -123,8 +123,8 @@ export const App: React.FC = () => {
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden bg-background font-sans text-slate-100 select-none">
-      {/* Frameless Titlebar with search & drag support (hidden during reader mode for full immersion) */}
-      {!activeReading && (
+      {/* Frameless Titlebar with search & drag support (hidden during any full-screen modal or reader) */}
+      {!activeReading && !selectedMangaId && !isOnboardingOpen && (isUnlocked || !profile) && (
         <Titlebar
           onOpenMangaById={(id) => setSelectedMangaId(id)}
           onSearchSubmit={(query) => {

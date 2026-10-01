@@ -137,7 +137,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
           </div>
           <div className="text-right">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono font-medium text-slate-300">
-              v2.0.10
+              v2.0.11
             </span>
           </div>
         </div>

@@ -250,9 +250,9 @@ npm run dist
 ```
 
 Os arquivos gerados serão salvos no diretório `release/`:
-- `release/ZReader Setup 2.0.10.exe`: Instalador completo via NSIS.
-- `release/ZReader 2.0.10.exe`: Executável portátil independente.
-- `release/ZReader-2.0.10-win.zip`: Pacote compactado limpo.
+- `release/ZReader Setup 2.0.11.exe`: Instalador completo via NSIS.
+- `release/ZReader 2.0.11.exe`: Executável portátil independente.
+- `release/ZReader-2.0.11-win.zip`: Pacote compactado limpo.
 
 ### 3. Build Mobile (Android)
 Para sincronizar a aplicação web com o projeto nativo do Android:

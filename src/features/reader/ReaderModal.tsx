@@ -1085,10 +1085,11 @@ export const ReaderModal: React.FC<ReaderModalProps> = ({
 
       {/* Top Controls Bar */}
       <header
-        className={`h-[calc(3.25rem+env(safe-area-inset-top,0px))] pt-[env(safe-area-inset-top,0px)] px-3 sm:px-4 fixed top-0 inset-x-0 z-50 flex items-center justify-between bg-black/92 sm:bg-black/85 backdrop-blur-xl border-b border-white/10 transition-transform duration-300 ${
+        className={`h-[calc(3.25rem+env(safe-area-inset-top,0px))] pt-[env(safe-area-inset-top,0px)] px-3 sm:px-4 fixed top-0 inset-x-0 z-50 grid grid-cols-[1fr_auto_1fr] items-center bg-black/92 sm:bg-black/85 backdrop-blur-xl border-b border-white/10 transition-transform duration-300 ${
           showControls ? 'translate-y-0' : '-translate-y-full'
         }`}
       >
+        {/* Left: Close + Title */}
         <div className="flex items-center gap-2.5 min-w-0">
           <button
             onClick={onClose}
@@ -1108,41 +1109,43 @@ export const ReaderModal: React.FC<ReaderModalProps> = ({
           </div>
         </div>
 
-        {/* Center: Mode Selectors (Ocidental Single, Double, Webtoon - Desktop) */}
-        {!isLoading && (
-          <div className="hidden md:flex items-center gap-1 bg-white/10 p-1 rounded-xl">
-            <button
-              onClick={() => setReaderMode('single')}
-              className={`p-1.5 rounded-lg text-xs transition-colors ${
-                readerMode === 'single' ? 'bg-primary text-[#0D0A0E] font-bold' : 'text-slate-400 hover:text-white'
-              }`}
-              title="Página Única (Ocidental)"
-            >
-              <Square weight="bold" className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => setReaderMode('double')}
-              className={`p-1.5 rounded-lg text-xs transition-colors ${
-                readerMode === 'double' ? 'bg-primary text-[#0D0A0E] font-bold' : 'text-slate-400 hover:text-white'
-              }`}
-              title="Página Dupla (Ocidental)"
-            >
-              <Columns weight="bold" className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => setReaderMode('webtoon')}
-              className={`p-1.5 rounded-lg text-xs transition-colors ${
-                readerMode === 'webtoon' ? 'bg-primary text-[#0D0A0E] font-bold' : 'text-slate-400 hover:text-white'
-              }`}
-              title="Rolagem Contínua (Webtoon)"
-            >
-              <Scroll weight="bold" className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
+        {/* Center: Mode Selectors — always perfectly centered via grid */}
+        <div className="flex items-center justify-center">
+          {!isLoading && (
+            <div className="hidden md:flex items-center gap-1 bg-white/10 p-1 rounded-xl">
+              <button
+                onClick={() => setReaderMode('single')}
+                className={`p-1.5 rounded-lg text-xs transition-colors ${
+                  readerMode === 'single' ? 'bg-primary text-[#0D0A0E] font-bold' : 'text-slate-400 hover:text-white'
+                }`}
+                title="Página Única (Ocidental)"
+              >
+                <Square weight="bold" className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => setReaderMode('double')}
+                className={`p-1.5 rounded-lg text-xs transition-colors ${
+                  readerMode === 'double' ? 'bg-primary text-[#0D0A0E] font-bold' : 'text-slate-400 hover:text-white'
+                }`}
+                title="Página Dupla (Ocidental)"
+              >
+                <Columns weight="bold" className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => setReaderMode('webtoon')}
+                className={`p-1.5 rounded-lg text-xs transition-colors ${
+                  readerMode === 'webtoon' ? 'bg-primary text-[#0D0A0E] font-bold' : 'text-slate-400 hover:text-white'
+                }`}
+                title="Rolagem Contínua (Webtoon)"
+              >
+                <Scroll weight="bold" className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 justify-end">
           {/* Botão de Ver Todos os Capítulos */}
           <button
             type="button"
